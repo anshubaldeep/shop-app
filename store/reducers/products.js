@@ -1,4 +1,5 @@
 import PRODUCTS from "../../data/dummy-data";
+import { ADD_TO_CART } from "../actions/products";
 
 
 const initialState={
@@ -10,8 +11,7 @@ const initialState={
 
 const productReducer=(state=initialState,action)=>{
     switch(action.type){
-        case '':
-
+        
     }
     return state;
 }

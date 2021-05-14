@@ -1,21 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
+import AppLoading from 'expo-app-loading';
+import { useFonts } from 'expo-font';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Provider } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 import ProductNavigation from './Navigation/ProductNavigation';
 import productReducer from './store/reducers/products';
-
+import cartReducer from './store/reducers/cart';
+import {composeWithDevTools} from 'redux-devtools-extension';
+import OrdersReducer from './store/reducers/orders';
 
 const rootReducer=combineReducers({
-  products:productReducer
+  products:productReducer,
+  cart:cartReducer,
+  orders:OrdersReducer
 })
-const store=createStore(rootReducer);
+const store=createStore(rootReducer,composeWithDevTools());
 
 export default function App() {
+  const [isLoaded]=useFonts({
+    'open-sans':require('./assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold':require('./assets/fonts/OpenSans-Bold.ttf')
+  })
   return (
     <Provider store={store}>
-    <ProductNavigation/>
+    {!isLoaded?<AppLoading/>:<ProductNavigation/>}
     </Provider>
   );
 }
